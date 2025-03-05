@@ -12,8 +12,24 @@
     }
     if ( filePath === '/how_to_get_cookie.png') {
       return context.rewrite('/static/how_to_get_cookie.png');
-  }
-    
+    }
+    if ( filePath === '/test') {
+      try {
+        const targetUrl = url.searchParams.get('url');
+        const fetchUrl = targetUrl ? `http://smanx.ct.ws/index7.php?url=${encodeURIComponent(targetUrl)}` : 'http://smanx.ct.ws/index7.php';
+        const response = await fetch(fetchUrl);
+        const data = await response.json();
+        return new Response(JSON.stringify(data), {
+          headers: { 'Content-Type': 'application/json' },
+        });
+      } catch (error) {
+        return new Response(JSON.stringify({ error: 'Failed to fetch data' }), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+    }
+
     //处理grok请求
     return handleGrokRequest(req);
   }
