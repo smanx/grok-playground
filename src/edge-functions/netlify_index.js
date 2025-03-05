@@ -18,9 +18,9 @@
         const targetUrl = url.searchParams.get('url');
         const fetchUrl = targetUrl ? `http://smanx.ct.ws/index7.php?url=${encodeURIComponent(targetUrl)}` : 'http://smanx.ct.ws/index7.php';
         const response = await fetch(fetchUrl);
-        const data = await response.json();
-        return new Response(JSON.stringify(data), {
-          headers: { 'Content-Type': 'application/json' },
+        const data = await response.text();
+        return new Response(data, {
+          headers: { 'Content-Type': 'text/plain' },
         });
       } catch (error) {
         return new Response(JSON.stringify({ error: 'Failed to fetch data' }), {
